@@ -25,10 +25,18 @@ if (!isset($id_user)) {
     exit();
 }
 
-// érifiez si le formulaire est soumis
-// Requête SQL pour insérer l'ID de l'utilisateur et l'ID du jeu dans la table bibliotèque
-$sql = "INSERT INTO bibliothèque (id_utilisateur, idgame) VALUES ('$id_user', '$id_jeu')";
-if ($connexion->query($sql) === TRUE) {
+// Vérifiez si le jeu existe déjà dans la bibliothèque de l'utilisateur
+$sql_check = "SELECT idgame FROM bibliothèque WHERE id_utilisateur = '$id_user' AND idgame = '$id_jeu'";
+$result = $connexion->query($sql_check);
+if ($result->num_rows > 0) {
+    // Si le jeu existe déjà dans la bibliothèque, redirigez l'utilisateur ou affichez un message d'erreur
+    echo "Ce jeu est déjà dans votre bibliothèque.";
+    exit();
+}
+
+// Si le jeu n'existe pas encore dans la bibliothèque, insérez-le
+$sql_insert = "INSERT INTO bibliothèque (id_utilisateur, idgame) VALUES ('$id_user', '$id_jeu')";
+if ($connexion->query($sql_insert) === TRUE) {
     // Rediriger l'utilisateur vers la page "PageUtilisateur.php" après l'ajout du jeu
     header("Location: PageUtilisateur.php?id_utilisateur=$id_user");
     exit();
