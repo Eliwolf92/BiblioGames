@@ -150,7 +150,7 @@ for ($i = 0; $i < count($games); $i++) {
                 // Afficher la div du jeu avec son nom, sa plateforme et son image
                 echo '
                 <div class="game" data-idgame="' . $currentIdGame . '">
-                    <img class="image" src="' . $imagePath . '" alt="' . $games[$i] . '">
+                    <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
                     <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
                 </div>
                 <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
