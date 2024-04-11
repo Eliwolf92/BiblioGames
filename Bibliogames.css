@@ -166,3 +166,9 @@
     border: solid black 2px;
 }
 
+.image{
+    position: relative;
+    width: max-content;
+    height: max-content;
+    display: inline-table;
+}

@@ -107,7 +107,7 @@ if (isset($_SESSION["id_utilisateur"])) {
         echo "Erreur de requête : " . $connexion->error;
     }
 
-    $connexion->close();
+
 } else {
     // Gérer l'absence d'identifiant d'utilisateur dans l'URL
     $username = "Utilisateur"; // Défaut si l'identifiant d'utilisateur n'est pas fourni
@@ -132,12 +132,46 @@ if (isset($_SESSION["id_utilisateur"])) {
 for ($i = 0; $i < count($games); $i++) {
     // Vérification pour s'assurer que l'index existe dans les deux tableaux
     if (isset($games[$i]) && isset($platform[$i]) && isset($idgame[$i])) {
-        $encodedGame = urlencode($games[$i]);
-        $encodedPlatform = urlencode($platform[$i]);
-        $currentIdGame = $idgame[$i]; // Utilisation d'une variable temporaire pour stocker l'ID de jeu
-        echo '
-        <div class="game" onclick="window.location.href = \'Game.php?game=' . $encodedGame . '&platform=' . $encodedPlatform . '&id_utilisateur='. $iduser . '\'"><img src="image.php">'.$games[$i].' - '.$platform[$i].'</div>
-        <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur='.$iduser.'&idgame='.$currentIdGame.'\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+        $currentIdGame = $idgame[$i]; // ID du jeu actuel
+
+        // Requête SQL pour récupérer le nom de l'image du jeu
+        $sql = "SELECT img_game FROM jeux WHERE idgame = $currentIdGame";
+        $result = $connexion->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $imageName = $row['img_game'];
+
+            // Chemin de l'image
+            $imagePath = 'Img_game/' . $imageName;
+
+            // Vérifier si le fichier existe avant de l'afficher
+            if (file_exists($imagePath)) {
+                // Afficher la div du jeu avec son nom, sa plateforme et son image
+                echo '
+                <div class="game" data-idgame="' . $currentIdGame . '">
+                    <img class="image" src="' . $imagePath . '" alt="' . $games[$i] . '">
+                    <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                </div>
+                <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+            } else {
+                // Si l'image n'existe pas, afficher un texte alternatif
+                echo '
+                <div class="game" data-idgame="' . $currentIdGame . '">
+                    <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                    <div>Image not found</div>
+                </div>
+                <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+            }
+        } else {
+            // Si aucune image n'est trouvée dans la base de données, afficher un texte alternatif
+            echo '
+            <div class="game" data-idgame="' . $currentIdGame . '">
+                <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                <div>No image found</div>
+            </div>
+            <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+        }
     }
 }
 ?>
