@@ -1,3 +1,92 @@
+<?php
+session_start(); // Assurez-vous que la session est démarrée
+
+$serveur = "localhost";
+$utilisateur = "root";
+$motdepasse = "Chaplin3000*";
+$basededonnees = "bibliogames";
+
+$connexion = new mysqli($serveur, $utilisateur, $motdepasse, $basededonnees);
+
+// Vérifie si la connexion à la base de données est établie
+if ($connexion->connect_error) {
+    die("Y'a un probleme chef" . $connexion->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Si le formulaire d'ajout de jeu est soumis
+
+    $NameGame = $_POST['Nom'];
+    $PlatformGame = $_POST['platform'];
+    $ImageGame = $_POST['image']; 
+
+
+    //verification Image pour le jeux à ajouté dans la liste    
+    if ($_FILES["image"]["error"] !== UPLOAD_ERR_OK){
+        switch($_FILES["image"]["error"]){
+            case UPLOAD_ERR_PARTIAL:
+                exit("No file was uploaded");
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                exit("No file was uploaded");
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                exit("File upload stopped by a PHP extension");
+                break;
+            case UPLOAD_ERR_FORM_SIZE:
+                exit("File exceeds MAW_FILE_SIZE in the HTML form");
+                break;
+            default:
+                exit("Unknown upload error");
+                break;
+    
+            }       
+        }
+    
+    if ($_FILES["image"]["size"] > 5000000){
+        exit("File too large (max 5 mb)");
+    }
+    
+    $finfo = new finfo(FILEINFO_MIME_TYPE);  
+    
+    $mime_type = $finfo->file($_FILES["image"]["tmp_name"]);
+    
+    
+    $mime_types = ["image/gif", "image/png", "image/jpg"];
+    
+    if ( ! in_array($_FILES["image"]["type"], $mime_types)) {
+        exit("Invalid file type");
+    }
+    
+    $pathinfo = pathinfo($_FILES['image']['name']);
+
+    $base = $pathinfo["filename"];
+
+
+    $filename = $_FILES["image"]["name"];
+    
+    $destination = __DIR__. "/Img_game/" . $filename;
+    
+    if (! move_uploaded_file($_FILES["image"]["tmp_name"], $destination)){
+        exit("peut pas transferer l'image");
+    }
+    
+    
+    print_r($_FILES);
+
+
+
+    // Requête SQL pour insérer le jeu dans la base de données
+    $sql = "INSERT INTO jeux (Nom, platform, img_game) VALUES ('$NameGame', '$PlatformGame', '$ImageGame')";
+    if ($connexion->query($sql) === TRUE) {
+        echo "<script>window.location.href = 'PageAdmin.php';</script>";
+    } else {
+        echo "Erreur: " . $sql . "<br>" . $connexion->error;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +102,8 @@
             <form method="post" enctype="multipart/form-data">
                 <label class="description" for="Nom">Nom du jeu :</label>
                 <input type="text" id="Nom" name="Nom" placeholder="nom du jeu" />
+
+
                 <label class="description" for="platform">Plateforme :</label>
                 <select id="platform" name="platform">
                     <option value="">Jouable où ?</option>
@@ -37,9 +128,13 @@
                     <option value="Steam">Steam</option>
                     <option value="Epic">Epic</option>
                 </select>
+
+
                 <label class="description" for="image">Image du jeu :</label>
                 <input type="file" id="image" name="image" /><br>
                 <button type="submit">Valider !</button>
+
+
             </form>
         </div>
     </div>
@@ -50,52 +145,3 @@
 
 
 
-<?php
-session_start(); // Assurez-vous que la session est démarrée
-
-$serveur = "localhost";
-$utilisateur = "root";
-$motdepasse = "Chaplin3000*";
-$basededonnees = "bibliogames";
-
-$connexion = new mysqli($serveur, $utilisateur, $motdepasse, $basededonnees);
-
-// Vérifie si la connexion à la base de données est établie
-if ($connexion->connect_error) {
-    die("Y'a un probleme chef" . $connexion->connect_error);
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Si le formulaire d'ajout de jeu est soumis
-
-    $NameGame = $_POST['Nom'];
-    $PlatformGame = $_POST['platform'];
-    $ImageGame = ''; // Initialise l'image du jeu
-
-    // Vérifie si une image est téléchargée
-    if (!empty($_FILES["image_file"]["tmp_name"])) {
-        $file_basename = pathinfo($_FILES["image_file"]["name"], PATHINFO_FILENAME);
-        $file_extension = pathinfo($_FILES["image_file"]["name"], PATHINFO_EXTENSION);
-        $new_image_name = $file_basename . '_' . date("Ymd_His") . '-' . $file_extension;
-        $new_image_name = $connexion->real_escape_string($new_image_name);
-        $target_directory = "Img_game/";
-        $target_path = $target_directory . $new_image_name;
-
-        // Déplace l'image téléchargée vers le répertoire cible
-        if (move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_path)) {
-            $ImageGame = $new_image_name;
-        } else {
-            echo "Erreur lors du téléchargement de l'image.";
-            exit();
-        }
-    }
-
-    // Requête SQL pour insérer le jeu dans la base de données
-    $sql = "INSERT INTO jeux (Nom, platform, img_game) VALUES ('$NameGame', '$PlatformGame', '$ImageGame')";
-    if ($connexion->query($sql) === TRUE) {
-        echo "<script>window.location.href = 'PageAdmin.php';</script>";
-    } else {
-        echo "Erreur: " . $sql . "<br>" . $connexion->error;
-    }
-}
-?>
