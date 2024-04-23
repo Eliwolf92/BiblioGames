@@ -76,6 +76,26 @@ if (isset($_SESSION["id_utilisateur"])) {
 }
 
 
+$sql = "SELECT idgame  FROM Jeux";
+
+// Exécution de la requête
+$resultat = $connexion->query($sql);
+
+// Vérification s'il y a des résultats
+if ($resultat->num_rows > 0) {
+    // Création d'un tableau pour stocker les noms des jeux
+    $idgame = array();
+
+    // Récupération des données de chaque ligne de résultat
+    while ($row = $resultat->fetch_assoc()) {
+        // Ajout du nom du jeu au tableau
+        $idgame[] = $row['idgame'];
+    }
+} else {
+    $idgame = array(); // Si aucun résultat, initialisation du tableau vide
+}
+
+
 
 ?>
 
@@ -89,7 +109,7 @@ if (isset($_SESSION["id_utilisateur"])) {
 </head>
 <body background="Fond Bibliogames connexion.png">
 <div id="Bande_Biblio"><a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
-<div style="height: 1250px;width: 1470px;border: solid black 15px; border-radius: 20px;background-color: rgb(198, 139, 30); position: relative;">
+<div class="backgroundmain">
     <div>
             <button id="addGames" onclick="window.location.href='insert_game.php'">
             </button>
@@ -99,12 +119,16 @@ if (isset($_SESSION["id_utilisateur"])) {
 // Affichage des noms des jeux avec les plateformes correspondantes dans des divs
 for ($i = 0; $i < count($games); $i++) {
     // Vérification pour s'assurer que l'index existe dans les deux tableaux
-    if (isset($games[$i]) && isset($platform[$i])) {
+    if (isset($games[$i]) && isset($platform[$i]) && isset($idgame[$i])) {
         echo '<div class="game">'.$games[$i].' - '.$platform[$i].'</div>';
         echo '<button class="bouton" onclick=>AddBiblio</button>';
+        // Ajout du bouton "suppr Game" avec l'ID du jeu comme paramètre GET
+        echo '<a href="supprgamedb.php?id_jeu='.$idgame[$i].'"><button>suppr Game</button></a>';
     }
 }
 ?>
+
+
     
 </div>
 <?php

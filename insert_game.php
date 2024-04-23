@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Requête SQL pour insérer le jeu dans la base de données
     $sql = "INSERT INTO jeux (Nom, platform, img_game) VALUES ('$NameGame', '$PlatformGame', '$ImageGame')";
+    $sql2 = "INSERT INTO infogame (infogame1, ImgInfoGame1,infogame2, ImgInfoGame2,infogame3, ImgInfoGame3) VALUES ($Info1, $imginfo1,$Info2, $imginfo2,$Info3, $imginfo3,)";
     if ($connexion->query($sql) === TRUE) {
         echo "<script>window.location.href = 'PageAdmin.php';</script>";
     } else {
@@ -69,14 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body background="Fond Bibliogames connexion.png">
 <div id="Bande_Biblio"><a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
-<div style="height: 1250px;width: 1470px;border: solid black 15px; border-radius: 20px;background-color: rgb(198, 139, 30); position: relative;">
+<div class="backgroundmain">
     <div id="NouveauJeux">
         <form method="post" enctype="multipart/form-data">
-            <label class="description" for="Nom">Nom du jeu :</label>
-            <input type="text" id="Nom" name="Nom" placeholder="nom du jeu" />
+            <label class="description" for="Nom">Nom du jeu :</label><br>
+            <input type="text" name="Nom" placeholder="nom du jeu" /><br><br>
 
 
-            <label class="description" for="platform">Plateforme :</label>
+            <label class="description" for="platform">Plateforme :</label><br>
             <select id="platform" name="platform">
                 <option value="">Jouable où ?</option>
                 <optgroup label="Xbox">
@@ -99,16 +100,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </optgroup>
                 <option value="Steam">Steam</option>
                 <option value="Epic">Epic</option>
-            </select>
+            </select><br><br>
 
 
             <label class="description" for="image">Image du jeu :</label>
-            <input type="file" id="image" name="image" /><br>
-            <button type="submit">Valider !</button>
+            <input type="file" id="image" name="image" /><br><br>
 
+            <div id="NouveauJeux">
+    <form method="post" enctype="multipart/form-data">
+        <!-- Autres champs du formulaire... -->
+        
+        <!-- Première groupe de zone de texte -->
+        <div class="aline">
+            <label class="description" for="description1">Descritpion principale</label><br>
+            <textarea maxlength="3000" class="Texte" name="Nom" placeholder="Donner la description principale (scenario)..."></textarea><br>
+            <label class="description" for="image_info1">Image description 1</label>
+            <input type="file" id="image_info1" name="image_info1" /><br><br>
+        </div>
 
-        </form>
-    </div>
+        <!-- Deuxième groupe de zone de texte -->
+        <div class="aline">
+            <label class="description" for="description2">Description 2</label><br>
+            <textarea maxlength="3000" class="Texte" name="Nom" placeholder="Donner une 2eme description (gameplay)...." ></textarea><br>
+            <label class="description" for="image_info2">Image description 2</label>
+            <input type="file" id="image_info2" name="image_info2" /><br><br>
+        </div>
+
+        <!-- Troisième groupe de zone de texte -->
+        <div class="aline">
+            <label class="description" for="description3">Description 3</label><br>
+            <textarea maxlength="3000" class="Texte" name="Nom" placeholder="Donner une 3eme description si possible..." ></textarea><br>
+            <label class="description" for="image_info3">Image description 3</label>
+            <input type="file" id="image_info3" name="image_info3" /><br><br>
+        </div>
+
+        <!-- Autres champs du formulaire... -->
+        <button type="submit">Valider !</button>
+    </form>
+</div>
 </div>
 </body>
 </html>

@@ -29,7 +29,7 @@
     position: relative;
     width: 110px;
     height: 55px;
-    background-color:#ff6200;
+    background-color:#a8529aca;
     border: solid black 3px;
     border-radius: 20px;
     font-family: Cyberpunk is not dead;
@@ -79,8 +79,8 @@
     align-items: center;
     background-color: black;
     border: white solid 3px;
-    width: 300px;
-    height: 500px;
+    width: 1100px;
+    height: 800px;
 
 }
 
@@ -118,7 +118,7 @@
     position: absolute; 
     left: 1700px;
     top: 40px;
-    background-color: #ffff71;
+    background-color: #5c3984;
     border: rgb(41, 41, 41) solid 2px;
     border-radius: 20px;
     height: 40px;
@@ -174,3 +174,48 @@
 }
 
 
+.description{
+
+    color: white;
+}
+
+textarea {
+    width: 400px; /* Largeur de la zone de texte */
+    height: 300px; /* Hauteur de la zone de texte */
+    resize: none; /* Désactiver le redimensionnement */
+    border: 2px solid #ccc; /* Bordure */
+    border-radius: 10px; /* Coins arrondis */
+    font-size: 16px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.aline{
+    display: flex; /* Utilisation de Flexbox pour aligner les éléments */
+            flex-direction: column; /* Alignement des éléments en colonne */
+            align-items: flex-start; /* Alignement des éléments sur la gauche */
+            margin-bottom: 20px; /* Marge en bas pour séparer les groupes de zones de texte */
+}
+
+.Texte {
+    width: 100%; /* Largeur de la zone de texte */
+    height: 100px; /* Hauteur de la zone de texte */
+    resize: none; /* Désactiver le redimensionnement */
+    padding: 10px; /* Espacement intérieur */
+    border: 2px solid #ccc; /* Bordure */
+    border-radius: 10px; /* Coins arrondis */
+    font-size: 16px; /* Taille de la police */
+    font-family: Arial, sans-serif; /* Police de caractères */
+    box-sizing: border-box; /* Boîte de modèle de dimension */
+    margin-bottom: 10px; /* Marge en bas pour séparer les zones de texte */
+}
+
+.backgroundmain{
+    height: 1250px;
+    width: 1470px;
+    border: solid black 15px;
+    border-radius: 20px;
+    background-color: rgba(187, 187, 187, 0.688);
+    position: relative;
+}

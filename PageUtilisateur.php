@@ -125,7 +125,7 @@ if (isset($_SESSION["id_utilisateur"])) {
 </head>
 <body background="Fond Bibliogames connexion.png">
 <div id="Bande_Biblio"><a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
-<div style="height: 1250px;width: 1470px;border: solid black 15px; border-radius: 20px;background-color: rgb(198, 139, 30); position: relative;">
+<div class="backgroundmain">
 
 <?php 
 // Affichage des noms des jeux avec les plateformes correspondantes dans des divs
@@ -159,19 +159,12 @@ for ($i = 0; $i < count($games); $i++) {
                 echo '
                 <div class="game" data-idgame="' . $currentIdGame . '">
                     <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
-                    <div>Image not found</div>
+                    <div>aucunes images trouver </div>
                 </div>
                 <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
             }
-        } else {
-            // Si aucune image n'est trouvée dans la base de données, afficher un texte alternatif
-            echo '
-            <div class="game" data-idgame="' . $currentIdGame . '">
-                <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
-                <div>No image found</div>
-            </div>
-            <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
         }
+    
     }
 }
 ?>
