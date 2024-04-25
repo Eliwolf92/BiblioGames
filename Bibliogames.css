@@ -159,8 +159,9 @@
 }
 
 .img_game:hover {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 280px;
+    max-height: 280px;
+    margin: 10px;
 }
 
 
@@ -239,6 +240,32 @@ textarea {
 }
 
 .game-details {
-    margin-top: -20px; 
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center; 
+}
+
+
+.jeu{
+    position: relative;
+    display: inline-block;
+    height: 1000px;
+    margin: 20px;
+}
+
+.gamebutton{
+    height: 30px;
+    width: 210px;
+    position: relative;
+    margin-top: 10px;
+    font-size: 15px;
+    border: solid black 2px;
+    background-color: #ffffff;
+    transition: 0.5s;
+    color: #000000;
+}
+
+.gamebutton:hover{
+    background-color: black;
+    color: #ffffff;
 }

@@ -149,14 +149,16 @@ for ($i = 0; $i < count($games); $i++) {
             if (file_exists($imagePath)) {
                 // Afficher la div du jeu avec son nom, sa plateforme et son image
                 echo '
+                <div class="jeu">
                 <div class="game-container" data-idgame="' . $currentIdGame . '">
                     <a href="Game.php?idgame=' . $currentIdGame . '&id_utilisateur=' . $iduser . '">
                         <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
                     </a>
                     <div class="game-details">
                         <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
-                        <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>
+                        <button class="gamebutton" onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>
                     </div>
+                </div>
                 </div>';
                 ;
             } else {

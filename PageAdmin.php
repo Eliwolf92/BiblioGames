@@ -1,5 +1,7 @@
 
 <?php
+session_start(); // Démarrage de la session
+
 $serveur = "localhost";
 $utilisateur = "root";
 $motdepasse = "Chaplin3000*";
@@ -9,7 +11,7 @@ $connexion = new mysqli($serveur, $utilisateur, $motdepasse, $basededonnees);
 
 
 // Requête SQL pour récupérer les noms des jeux
-$sql = "SELECT Nom FROM Jeux";
+$sql = "SELECT Nom  FROM Jeux";
 
 // Exécution de la requête
 $resultat = $connexion->query($sql);
@@ -28,8 +30,7 @@ if ($resultat->num_rows > 0) {
     $games = array(); // Si aucun résultat, initialisation du tableau vide
 }
 
-
-// Requête SQL pour récupérer lse platforms de tes jeux
+// Requête SQL pour récupérer les platforms de tes jeux
 $sql = "SELECT platform  FROM Jeux";
 
 // Exécution de la requête
@@ -47,6 +48,44 @@ if ($resultat->num_rows > 0) {
     }
 } else {
     $platform = array(); // Si aucun résultat, initialisation du tableau vide
+}
+
+$sql = "SELECT idgame  FROM Jeux";
+
+// Exécution de la requête
+$resultat = $connexion->query($sql);
+
+// Vérification s'il y a des résultats
+if ($resultat->num_rows > 0) {
+    // Création d'un tableau pour stocker les noms des jeux
+    $idgame = array();
+
+    // Récupération des données de chaque ligne de résultat
+    while ($row = $resultat->fetch_assoc()) {
+        // Ajout du nom du jeu au tableau
+        $idgame[] = $row['idgame'];
+    }
+} else {
+    $idgame = array(); // Si aucun résultat, initialisation du tableau vide
+}
+
+// Vérifie si la plateforme est sélectionnée
+if(isset($_POST['platform']) && !empty($_POST['platform'])) {
+    // Récupère la plateforme sélectionnée
+    $platform = $_POST['platform'];
+
+    // Requête SQL pour récupérer les jeux correspondant à la plateforme sélectionnée
+    $selectplat = "SELECT Nom FROM Jeux WHERE platform = '$platform'";
+
+    // Exécutez la requête SQL et affichez les résultats
+    $result = $connexion->query($selectplat);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo $row['Nom'] . "<br>";
+        }
+    } else {
+        echo "Aucun jeu trouvé pour cette plateforme.";
+    }
 }
 
 
@@ -69,34 +108,11 @@ if (isset($_SESSION["id_utilisateur"])) {
         echo "Erreur de requête : " . $connexion->error;
     }
 
-    $connexion->close();
+
 } else {
     // Gérer l'absence d'identifiant d'utilisateur dans l'URL
     $username = "Utilisateur"; // Défaut si l'identifiant d'utilisateur n'est pas fourni
 }
-
-
-$sql = "SELECT idgame  FROM Jeux";
-
-// Exécution de la requête
-$resultat = $connexion->query($sql);
-
-// Vérification s'il y a des résultats
-if ($resultat->num_rows > 0) {
-    // Création d'un tableau pour stocker les noms des jeux
-    $idgame = array();
-
-    // Récupération des données de chaque ligne de résultat
-    while ($row = $resultat->fetch_assoc()) {
-        // Ajout du nom du jeu au tableau
-        $idgame[] = $row['idgame'];
-    }
-} else {
-    $idgame = array(); // Si aucun résultat, initialisation du tableau vide
-}
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -120,11 +136,52 @@ if ($resultat->num_rows > 0) {
 for ($i = 0; $i < count($games); $i++) {
     // Vérification pour s'assurer que l'index existe dans les deux tableaux
     if (isset($games[$i]) && isset($platform[$i]) && isset($idgame[$i])) {
-        echo '<div class="game">'.$games[$i].' - '.$platform[$i].'</div>';
-        echo '<button onclick=>AddBiblio</button>';
-        echo '<a href="supprgamedb.php?id_jeu='.$idgame[$i].'"><button>suppr Game</button></a>';
+        $currentIdGame = $idgame[$i]; // ID du jeu actuel
+
+        // Requête SQL pour récupérer le nom de l'image du jeu
+        $sql = "SELECT img_game FROM jeux WHERE idgame = $currentIdGame";
+        $result = $connexion->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $imageName = $row['img_game'];
+
+            // Chemin de l'image
+            $imagePath = 'Img_game/' . $imageName;
+
+            // Vérifier si le fichier existe avant de l'afficher
+            if (file_exists($imagePath)) {
+                // Afficher la div du jeu avec son nom, sa plateforme et son image
+                echo '
+                <div class="jeu">
+                <div class="game-container" data-idgame="' . $currentIdGame . '">
+                    <a href="Game.php?idgame=' . $currentIdGame . '&id_utilisateur=' . $iduser . '">
+                        <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
+                    </a>
+                    <div class="game-details">
+                        <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                        <button class="gamebutton" onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>
+                        <a href="supprgamedb.php?id_jeu='.$idgame[$i].'"><button>suppr Game</button></a>
+                    </div>
+                </div>
+                </div>';
+            } else {
+                // Si l'image n'existe pas, afficher un texte alternatif
+                    echo '
+                    <div class="game" data-idgame="' . $currentIdGame . '">
+                        <a href="Game.php?idgame=' . $currentIdGame . '&id_utilisateur='.$iduser.'">
+                            <div>aucune image trouvée</div>
+                        </a>
+                        <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                    </div>
+                    <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+                                }
+        }
+    
     }
 }
+
+
 ?>
 
 
