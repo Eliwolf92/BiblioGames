@@ -121,8 +121,7 @@ for ($i = 0; $i < count($games); $i++) {
     // Vérification pour s'assurer que l'index existe dans les deux tableaux
     if (isset($games[$i]) && isset($platform[$i]) && isset($idgame[$i])) {
         echo '<div class="game">'.$games[$i].' - '.$platform[$i].'</div>';
-        echo '<button class="bouton" onclick=>AddBiblio</button>';
-        // Ajout du bouton "suppr Game" avec l'ID du jeu comme paramètre GET
+        echo '<button onclick=>AddBiblio</button>';
         echo '<a href="supprgamedb.php?id_jeu='.$idgame[$i].'"><button>suppr Game</button></a>';
     }
 }

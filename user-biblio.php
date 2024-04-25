@@ -52,7 +52,7 @@ $showgame = $connexion->query($gamesuser);
 </head>
 <body background="Fond Bibliogames connexion.png">
 <div id="Bande_Biblio"><button onclick="window.location.href='PageUtilisateur.php?id_utilisateur=<?php echo($iduser); ?>'">retour</button> <a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
-<div style="height: 1250px;width: 1470px;border: solid black 15px; border-radius: 20px;background-color: rgb(198, 139, 30); position: relative;">
+<div class="backgroundmain">
  
 <div id="list-biblio">
 

@@ -69,7 +69,7 @@ if (isset($_SESSION["id_utilisateur"])) {
     <a id="Bibliogames">Bibliogames</a>
     <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button>
 </div>
-<div style="object-position:center ; height: 1250px;width: 1470px;border: solid black 15px; border-radius: 20px;background-color: rgb(198, 139, 30); position: relative;">
+<div class="backgroundmain">
     <form method="post">
         Pseudo actuel : <?php echo "$username"; ?> <br><br>
         Nouveau pseudonyme : <input type="text" name="nouveauPseudo"><br><br>

@@ -149,25 +149,34 @@ for ($i = 0; $i < count($games); $i++) {
             if (file_exists($imagePath)) {
                 // Afficher la div du jeu avec son nom, sa plateforme et son image
                 echo '
-                <div class="game" data-idgame="' . $currentIdGame . '">
-                    <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
-                    <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
-                </div>
-                <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+                <div class="game-container" data-idgame="' . $currentIdGame . '">
+                    <a href="Game.php?idgame=' . $currentIdGame . '&id_utilisateur=' . $iduser . '">
+                        <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
+                    </a>
+                    <div class="game-details">
+                        <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                        <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>
+                    </div>
+                </div>';
+                ;
             } else {
                 // Si l'image n'existe pas, afficher un texte alternatif
-                echo '
-                <div class="game" data-idgame="' . $currentIdGame . '">
-                    <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
-                    <div>aucunes images trouver </div>
-                </div>
-                <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
-            }
+                    echo '
+                    <div class="game" data-idgame="' . $currentIdGame . '">
+                        <a href="Game.php?idgame=' . $currentIdGame . '&id_utilisateur='.$iduser.'">
+                            <div>aucune image trouvée</div>
+                        </a>
+                        <div>' . $games[$i] . ' - ' . $platform[$i] . '</div>
+                    </div>
+                    <button onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $currentIdGame . '\'" type="button" name="ajoutbiblio" value="AddBiblio">ajouter à sa bibliothèque</button>';
+                                }
         }
     
     }
 }
+
 ?>
+
 
 
 

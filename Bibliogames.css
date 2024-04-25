@@ -79,8 +79,8 @@
     align-items: center;
     background-color: black;
     border: white solid 3px;
-    width: 1100px;
-    height: 800px;
+    width: 1450px;
+    height: 1100px;
 
 }
 
@@ -125,23 +125,7 @@
     width: 120px;
 }
 
-.game{
-    position: relative;
-    height: 200px;
-    width: 170px;
-    text-align: center ;
-    background-color: #840feb;
-    margin-top: 20px;
-    margin-left:20px;
-    display: inline-table;
-    transition: background-color 300ms;
-}
 
-.game:hover{
-    color: #ffffff;
-    background-color: #1aeb0f;
-
-}
 
 
 
@@ -166,12 +150,19 @@
     border: solid black 2px;
 }
 
-.img_game{
-    position: relative;
-    width: max-content;
-    height: max-content;
-    display: inline-table;
+.img_game {
+    max-width: 250px; 
+    max-height: 250px; 
+    margin: 20px; 
+    transition: 0.5s; 
+    display: inline-block; 
 }
+
+.img_game:hover {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 
 
 .description{
@@ -180,11 +171,11 @@
 }
 
 textarea {
-    width: 400px; /* Largeur de la zone de texte */
-    height: 300px; /* Hauteur de la zone de texte */
-    resize: none; /* Désactiver le redimensionnement */
-    border: 2px solid #ccc; /* Bordure */
-    border-radius: 10px; /* Coins arrondis */
+    width: 400px; 
+    height: 300px; 
+    resize: none; 
+    border: 2px solid #ccc; 
+    border-radius: 10px; 
     font-size: 16px;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
@@ -192,30 +183,62 @@ textarea {
 }
 
 .aline{
-    display: flex; /* Utilisation de Flexbox pour aligner les éléments */
-            flex-direction: column; /* Alignement des éléments en colonne */
-            align-items: flex-start; /* Alignement des éléments sur la gauche */
-            margin-bottom: 20px; /* Marge en bas pour séparer les groupes de zones de texte */
+    display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+            margin-bottom: 20px; 
 }
 
 .Texte {
-    width: 100%; /* Largeur de la zone de texte */
-    height: 100px; /* Hauteur de la zone de texte */
-    resize: none; /* Désactiver le redimensionnement */
-    padding: 10px; /* Espacement intérieur */
-    border: 2px solid #ccc; /* Bordure */
-    border-radius: 10px; /* Coins arrondis */
-    font-size: 16px; /* Taille de la police */
-    font-family: Arial, sans-serif; /* Police de caractères */
-    box-sizing: border-box; /* Boîte de modèle de dimension */
-    margin-bottom: 10px; /* Marge en bas pour séparer les zones de texte */
+    width: 700px;
+    height: 100px; 
+    resize: none; 
+    padding: 10px; 
+    border: 2px solid #ccc; 
+    border-radius: 10px; 
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
 }
 
 .backgroundmain{
-    height: 1250px;
+    height: 100%;
     width: 1470px;
     border: solid black 15px;
     border-radius: 20px;
     background-color: rgba(187, 187, 187, 0.688);
     position: relative;
+}
+
+
+.boxinfo {
+    width: 80%; 
+    max-width: 700px; 
+    height: auto; 
+    padding: 20px;
+    margin: 20px auto; 
+    font-size: 16px;
+    background-color: #f0f0f09d; 
+    border: 1px solid #000000; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+.boximg{
+    width: 80%; 
+    max-width: 700px; 
+    height: auto; 
+    padding: 20px; 
+    margin: 20px auto; 
+}
+
+.game-container {
+    display: inline-block;
+    margin-right: 20px; 
+}
+
+.game-details {
+    margin-top: -20px; 
+    text-align: center; 
 }
