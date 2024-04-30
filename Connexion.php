@@ -11,35 +11,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Échec de la connexion : " . $connexion->connect_error);
     }
 
-    // Requête SQL pour vérifier les informations de connexion
-    $requete = "SELECT * FROM utilisateur WHERE pseudonyme = '$username' AND mot_de_passe = '$password'";
+    // Requête SQL pour récupérer le mot de passe crypté de l'utilisateur
+    $requete = "SELECT * FROM utilisateur WHERE pseudonyme = '$username'";
     $resultat = $connexion->query($requete);
 
     if ($resultat) {
         if ($resultat->num_rows > 0) {
             $row = $resultat->fetch_assoc();
+            $hashed_password = $row['mot_de_passe']; // Mot de passe crypté de la base de données
             $iduser = $row['id_utilisateur']; // Récupérer l'ID de l'utilisateur
 
-            if ($row['AdminUser'] == 1) {
+            // Décrypter le mot de passe stocké
+            $stored_password = sha1($password);
+
+            if ($stored_password === $hashed_password) {
+                // Mot de passe correct, connectez l'utilisateur
                 $_SESSION["id_utilisateur"] = $iduser;
-                header("Location: PageAdmin.php?id_utilisateur=$iduser");
+
+                if ($row['AdminUser'] == 1) {
+                    header("Location: PageAdmin.php?id_utilisateur=$iduser");
+                } else {
+                    header("Location: PageUtilisateur.php?id_utilisateur=$iduser");
+                }
                 exit;
             } else {
-                $_SESSION["id_utilisateur"] = $iduser;
-                header("Location: PageUtilisateur.php?id_utilisateur=$iduser");
-                exit;
+                // Mot de passe incorrect
+                echo "Identifiant ou mot de passe invalide. Veuillez réessayer.";
             }
         } else {
-            echo "Identifiant invalides. Veuillez réessayer.";
+            // Aucun utilisateur trouvé avec ce nom d'utilisateur
+            echo "Identifiant ou mot de passe invalide. Veuillez réessayer.";
         }
     } else {
+        // Erreur de requête
         echo "Erreur de requête : " . $connexion->error;
     }
 
     $connexion->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">

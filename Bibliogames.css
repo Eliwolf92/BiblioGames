@@ -269,3 +269,46 @@ textarea {
     background-color: black;
     color: #ffffff;
 }
+
+.boximgmain{
+    height: 300px;
+    width: auto;
+}
+
+
+
+.comm_position{
+
+    position: relative;
+    height: 100%;
+    width: 1400px;
+    border: solid black 4px;
+    margin: 20px;
+    background-color: rgba(57, 57, 57, 0.448);
+}
+
+.comm{
+    position: relative;
+    height: 120px;
+    width: 1360px;
+    margin: 20px;
+    border: black solid 2px;
+    background-color: #b0b0b063;
+    resize: none;
+    font-family: Arial, sans-serif; 
+    box-sizing: border-box;
+}
+
+.usercom{
+    position: relative;
+    font-size: 20px;
+    left: 20px;
+    top: 20px;
+}
+
+.section_comm{
+    height: 100%;
+    width: 1360px;
+    border: black solid 2px;
+    margin: 20px;
+}

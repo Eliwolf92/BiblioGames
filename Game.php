@@ -12,6 +12,13 @@ $platform = ""; // Définition par défaut
 $idgame = isset($_GET['idgame']) ? intval($_GET['idgame']) : null; // Récupération de l'identifiant du jeu depuis l'URL
 $iduser = isset($_GET['id_utilisateur']) ? intval($_GET['id_utilisateur']) : null; // Récupération de l'identifiant de l'utilisateur depuis l'URL
 
+
+if ($iduser){
+    $sql= "SELECT pseudonyme FROM utilisateur WHERE id_utilisateur = $iduser";
+    $resultat_username = $connexion->query($sql); 
+    $row_username = $resultat_username->fetch_assoc();
+    $username = $row_username['pseudonyme'];
+}
 // Vérification de la validité de l'identifiant du jeu
 if ($idgame) {
     // Requête SQL pour récupérer l'id_info à partir de idgame
@@ -27,7 +34,7 @@ if ($idgame) {
         $id_info = $row_idinfo['id_info'];
 
         // Requête SQL pour récupérer les informations du jeu et de la plateforme à partir de l'identifiant unique de l'information "$id_info"
-        $sql = "SELECT Nom, platform FROM jeux WHERE idgame = $idgame";
+        $sql = "SELECT Nom, platform,img_game FROM jeux WHERE idgame = $idgame";
         $sql2 = "SELECT infogame1, infogame2, infogame3 FROM infogame WHERE id_info = $id_info ";
         $sql3 = "SELECT ImgInfoGame1, ImgInfoGame2, ImgInfoGame3 FROM infogame WHERE id_info = $id_info";
 
@@ -40,6 +47,10 @@ if ($idgame) {
             $row = $resultat->fetch_assoc();
             $game = $row['Nom'];
             $platform = $row['platform'];
+
+            $imgFoldermain = "Img_game/";
+            $img_game =$imgFoldermain . $row['img_game'];
+
         } else {
             // Gérer le cas où aucune information n'est trouvée pour cet ID
             $game = "Jeu introuvable";
@@ -122,6 +133,7 @@ if ($idgame) {
 echo '<center>
     <div class="info-container">
         <h2>' . $game . ' sur ' . $platform . '</h2>
+        <img class="boximgmain" src="'. $img_game .'" alt="Main Img">
         <div class="info">
             <h3>Scénario :</h3>
             <p class="boxinfo">' . $info1 . '</p>
@@ -140,6 +152,68 @@ echo '<center>
     </div>
     </center>';
 ?>
-    
+
+
+<div class="comm_position">
+    <form method="post">
+        <a class=usercom><?php echo $username; ?> :</a>
+        <textarea maxlength="3000" class="comm" name="Comm_user" placeholder="Commentaire..." required></textarea>
+        <input type="submit" name="submit_comment" value="Poster">
+    </form>
+</div>
+
+
+    <?php
+if(isset($_POST['submit_comment'])) {
+    // Assurez-vous que le commentaire n'est pas vide
+    if(!empty($_POST['Comm_user'])) {
+        // Récupérez le commentaire soumis par l'utilisateur
+        $comm_user = $_POST['Comm_user'];
+
+        // Insérez le commentaire dans la base de données
+        $sql_insert_comment = "INSERT INTO comm_user (id_user, idgame, comm_user) VALUES ('$iduser','$idgame','$comm_user')";
+        $result_insert = $connexion->query($sql_insert_comment);
+
+        // Vérifiez si l'insertion s'est bien déroulée
+        if($result_insert) {
+            echo "<script>alert('Commentaire ajouté avec succès.');</script>";
+        } else {
+            echo "<script>alert('Une erreur s'est produite lors de l'ajout du commentaire. Veuillez réessayer.');</script>";
+        }
+    } else {
+        echo "<script>alert('Veuillez saisir un commentaire.');</script>";
+    }
+}
+
+// Récupération des commentaires associés au jeu actuel
+$sql_comments = "SELECT id_user, comm_user FROM comm_user WHERE idgame = $idgame";
+$result_comments = $connexion->query($sql_comments);
+
+// Vérification s'il y a des commentaires associés au jeu
+if ($result_comments->num_rows > 0) {
+    // Affichage des commentaires
+    while ($row_comment = $result_comments->fetch_assoc()) {
+        $comment_user_id = $row_comment['id_user'];
+        $comment_content = $row_comment['comm_user'];
+
+        // Récupération du pseudonyme de l'utilisateur qui a posté le commentaire
+        $sql_user = "SELECT pseudonyme FROM utilisateur WHERE id_utilisateur = $comment_user_id";
+        $result_user = $connexion->query($sql_user);
+        $row_user = $result_user->fetch_assoc();
+        $comment_user_pseudo = $row_user['pseudonyme'];
+
+        // Affichage du commentaire
+        echo '<div class="section_comm">';
+        echo '<a class="usercom">' . $comment_user_pseudo . ' :</a>';
+        echo '<p class="commentaire">' . $comment_content . '</p>';
+        echo '</div>';
+    }
+} else {
+    // Aucun commentaire trouvé
+    echo '<p>Aucun commentaire pour ce jeu pour le moment.</p>';
+}
+?>
+
+
 </body>
 </html>

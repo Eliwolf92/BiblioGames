@@ -38,7 +38,7 @@ if ($connexion->connect_error) {
         <div><label style="position: relative; left: 170px; top: 170px;font-family: Edo SZ; font-size: 20px;" for="password">Mot-De-Passe :</label></div>
         <div><input style="border-radius: 10px; border: solid black 2px; height: 40px; width: 160px;top: 170px;position: relative; left: 170px;" type="password" id="password" name="password" placeholder="*****"></div>
     
-        <div><button type="submit" style="border-radius: 10px; border: solid black 2px; height: 40px; width: 160px;top: 290px;position: relative; left: 170px; font-family: Cyberpunk is not dead;">INSCRIT</button>
+        <div><button name="inscrit" type="submit" style="border-radius: 10px; border: solid black 2px; height: 40px; width: 160px;top: 290px;position: relative; left: 170px; font-family: Cyberpunk is not dead;">INSCRIT</button>
         </div>
     </form>
     </div>
@@ -51,25 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['mail'];
     $mdp = $_POST['password'];
-    sha1($mdp); // On crypte le mot de passe en utilisant l'algorithme SHA1
-
-    $iduser="SELECT iduser FROM utilisateur WHERE pseudonyme = '$username'";
-
-    // Redirection vers la page appropriée en fonction du type d'utilisateur
-    header("Location: PageUtilisateur.php?iduser=$iduser");
-    exit();
+    $mdp = sha1($mdp); // Cryptage du mot de passe en utilisant SHA1
 
     $sql = "INSERT INTO utilisateur (pseudonyme, email, mot_de_passe) VALUES ('$username', '$email', '$mdp')";
 
     if ($connexion->query($sql) === TRUE) {
-        echo "<script>window.location.href = 'PageUtilisateur.php?iduser=$iduser';</script>";
+        // Récupérer l'ID de l'utilisateur après l'insertion
+        $iduser_query = "SELECT id_utilisateur FROM utilisateur WHERE pseudonyme = '$username'";
+        $result = $connexion->query($iduser_query);
+        $row = $result->fetch_assoc();
+        $iduser = $row['id_utilisateur'];
         
-        
+        // Redirection vers la page utilisateur avec l'ID de l'utilisateur
+        header("Location: PageUtilisateur.php?iduser=$iduser");
         exit;
     } else {
         echo "Erreur: " . $sql . "<br>" . $connexion->error;
     }
 }
+
 ?>
 
 
