@@ -110,7 +110,7 @@ $connexion->close();
 </div>
 <div class="backgroundmain">
     <div class="Liste">
-        <h2>Liste des jeux de <?php echo htmlspecialchars($username); ?></h2>
+        <h2>Bienvenue <?php echo htmlspecialchars($username); ?> !</h2>
         
         <!-- Boutons de tri -->
         <div class="tri">
@@ -123,7 +123,7 @@ $connexion->close();
         if (isset($games) && is_array($games) && count($games) > 0) {
             for ($i = 0; $i < count($games); $i++) {
                 // Chemin de l'image du jeu
-                $imagePath = 'Img_game/' . $games[$i] . '.png';
+                $imagePath = 'Img_game/' . $games[$i] .'_'. $platform[$i] .'.png';
                 
                 // Vérifier si le fichier existe avant de l'afficher
                 if (file_exists($imagePath)) {
@@ -140,7 +140,10 @@ $connexion->close();
                             </div>
                         </div>
                     </div>';
-                } else {
+                }
+                
+                else if (!file_exists($imagePath)) {
+                    echo '<p style="color: red;">Image manquante : ' . htmlspecialchars($imagePath) . '</p>'; // Affiche le chemin manquant en rouge
                     echo '
                     <div class="jeu">
                         <div class="game-container" data-idgame="' . $idgame[$i] . '">
@@ -155,6 +158,7 @@ $connexion->close();
                         </div>
                     </div>';
                 }
+                
             }
         } else {
             echo "Aucun jeu trouvé.";

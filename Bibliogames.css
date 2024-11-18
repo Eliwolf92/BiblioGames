@@ -151,19 +151,15 @@
 }
 
 .img_game {
-    max-width: 250px; 
-    max-height: 250px; 
-    margin: 20px; 
-    transition: 0.5s; 
-    display: inline-block; 
+    max-width: 100%; /* L'image ne dépasse jamais la largeur du parent */
+    height: auto; /* Conserve les proportions */
+    border-radius: 10px; /* Coins arrondis */
+    transition: transform 0.3s; /* Animation pour le hover */
 }
 
 .img_game:hover {
-    max-width: 280px;
-    max-height: 280px;
-    margin: 10px;
+    transform: scale(1.1); /* Agrandit légèrement au survol */
 }
-
 
 
 .description{
@@ -203,13 +199,16 @@ textarea {
     margin-bottom: 10px; 
 }
 
-.backgroundmain{
-    height: 100%;
+.backgroundmain {
     width: 80%;
     border: solid black 15px;
     border-radius: 20px;
     background-color: rgba(187, 187, 187, 0.688);
-    position: relative;
+    display: flex;
+    flex-wrap: wrap; /* Permet d'enrouler les éléments si nécessaire */
+    justify-content: space-around; /* Espace uniforme entre les éléments */
+    padding: 20px; /* Ajoute un espace intérieur */
+    gap: 20px; /* Espacement entre les jeux */
 }
 
 
@@ -234,23 +233,20 @@ textarea {
     margin: 20px auto; 
 }
 
-.game-container {
-    display: inline-block;
-    margin-right: 20px; 
-}
+
 
 .game-details {
     margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: center; 
+    text-align: center;
 }
 
 
-.jeu{
-    position: relative;
-    display: inline-block;
-    height: 100%;
-    margin: 20px;
+.jeu {
+    display: flex; /* Aligne contenu interne en flex (utile pour centrer image et texte) */
+    flex-direction: column; /* Image au-dessus, texte en dessous */
+    align-items: center; /* Centre horizontalement l'image et le texte */
+    width: 200px; /* Taille fixe pour les jeux */
+    margin: 0; /* Supprime les marges inutiles */
 }
 
 .gamebutton{
@@ -350,6 +346,7 @@ textarea {
 
 .Liste{
     position: relative;
+    display: flex;
     height: 500px;
     width: 500px;
     border: solid black 3px;
