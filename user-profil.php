@@ -43,7 +43,7 @@ if (isset($_SESSION["id_utilisateur"])) {
     <link rel="stylesheet" href="Bibliogames.css">
 </head>
 <body background="Fond Bibliogames connexion.png">
-<div id="Bande_Biblio"><button  onclick="window.location.href='PageUtilisateur.php?id_utilisateur=<?php echo($iduser);?>'">retour</button>   <a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
+<div id="Bande_Biblio"><button class="Retour"  onclick="window.location.href='PageUtilisateur.php?id_utilisateur=<?php echo($iduser);?>'">retour</button>   <a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
 <div class="backgroundmain">
  
 <div id="option">
@@ -51,7 +51,7 @@ if (isset($_SESSION["id_utilisateur"])) {
     <a href="pseudo-change.php?id_utilisateur=<?php echo($iduser);?>">changer de pseudo</a><br><br>
     <a href="password-change.php?id_utilisateur=<?php echo($iduser);?>">changer de mot-de-passe</a><br><br>
     <a href="delete-user.php?id_utilisateur=<?php echo($iduser);?>">supprmier mon compte</a><br><br>
-    <a href="projet-fini.php">crédit</a><br><br>
+    <a href="Page_Bonus.php?id_utilisateur=<?php echo($iduser);?>">crédit</a><br><br>
     
 </div>
     

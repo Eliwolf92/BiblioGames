@@ -196,11 +196,14 @@ for ($i = 0; $i < count($games); $i++) {
             <h2 style="color: black;font-size: 150%;">Bienvenue <?php echo "$username"; ?></h2>
         </center>
     </div>
-    <button class="Boutton" onclick="window.location.href = 'user-biblio.php?username=<?php echo urlencode($username); ?>'">
+    <button class="Boutton" onclick="window.location.href = 'user-biblio.php?username=<?php echo urlencode($iduser); ?>'">
     Biblio
 </button>
-<button class="Boutton" onclick="window.location.href = 'user-profil.php?username=<?php echo urlencode($username); ?>'">
+<button class="Boutton" onclick="window.location.href = 'user-profil.php?username=<?php echo urlencode($iduser); ?>'">
     Profil
+</button>
+<button class="Boutton" onclick="window.location.href = 'ListeUser.php?username=<?php echo urlencode($iduser); ?>'">
+    Liste User
 </button>
 <br><br>
 

@@ -51,7 +51,7 @@ $showgame = $connexion->query($gamesuser);
     <link rel="stylesheet" href="Bibliogames.css">
 </head>
 <body background="Fond Bibliogames connexion.png">
-<div id="Bande_Biblio"><button onclick="window.location.href='PageUtilisateur.php?id_utilisateur=<?php echo($iduser); ?>'">retour</button> <a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
+<div id="Bande_Biblio"><button class="Retour" onclick="window.location.href='PageUtilisateur.php?id_utilisateur=<?php echo($iduser); ?>'">retour</button> <a id="Bibliogames">Bibliogames</a> <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button></div>
 <div class="backgroundmain">
  
 <div id="list-biblio">

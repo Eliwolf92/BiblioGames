@@ -205,7 +205,7 @@ textarea {
 
 .backgroundmain{
     height: 100%;
-    width: 1470px;
+    width: 80%;
     border: solid black 15px;
     border-radius: 20px;
     background-color: rgba(187, 187, 187, 0.688);
@@ -228,8 +228,8 @@ textarea {
 
 .boximg{
     width: 80%; 
-    max-width: 700px; 
-    height: auto; 
+    max-width: 840px; 
+    height: 2%; 
     padding: 20px; 
     margin: 20px auto; 
 }
@@ -249,7 +249,7 @@ textarea {
 .jeu{
     position: relative;
     display: inline-block;
-    height: 1000px;
+    height: 100%;
     margin: 20px;
 }
 
@@ -281,7 +281,7 @@ textarea {
 
     position: relative;
     height: 100%;
-    width: 1400px;
+    width: 95%;
     border: solid black 4px;
     margin: 20px;
     background-color: rgba(57, 57, 57, 0.448);
@@ -290,7 +290,7 @@ textarea {
 .comm{
     position: relative;
     height: 120px;
-    width: 1360px;
+    width: 95% ;
     margin: 20px;
     border: black solid 2px;
     background-color: #b0b0b063;
@@ -308,7 +308,49 @@ textarea {
 
 .section_comm{
     height: 100%;
-    width: 1360px;
+    width: 95%;
     border: black solid 2px;
     margin: 20px;
+}
+
+.barreLateral{
+    height: 1250px;
+    width: 250px;
+    border: solid black 10px;
+     position: absolute;
+    background-color: rgb(201, 201, 201);
+     top: 130px;
+    left: 1520px;
+    
+}
+
+.Retour{
+    position: relative;
+    margin: 1.9rem;
+    height: 30px;
+    width: 110px;
+    background-color: #5c3984;
+    border: solid black 2px;
+    border-radius: 10px;
+    transition: 1s ;
+}
+
+.Retour:hover{
+    background-color: black;
+    color: white;
+    border: #ffffff;
+}
+
+.nogame{
+    display: none;
+    color: rgb(0, 0, 0);
+    margin: 50px;
+    font-size: 40px;
+}
+
+.Liste{
+    position: relative;
+    height: 500px;
+    width: 500px;
+    border: solid black 3px;
 }
