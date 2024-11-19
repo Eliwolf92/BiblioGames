@@ -150,15 +150,23 @@
     border: solid black 2px;
 }
 
+
 .img_game {
-    max-width: 100%; /* L'image ne dépasse jamais la largeur du parent */
+    max-width: 100%; /* L'image s'adapte à la largeur du parent */
     height: auto; /* Conserve les proportions */
     border-radius: 10px; /* Coins arrondis */
-    transition: transform 0.3s; /* Animation pour le hover */
+    transition: transform 0.3s; /* Animation sur le hover */
+    margin-bottom: 15px; /* Ajoute un espacement entre l'image et les détails */
 }
 
 .img_game:hover {
-    transform: scale(1.1); /* Agrandit légèrement au survol */
+    transform: scale(1.5); /* Agrandit légèrement au survol */
+}
+
+
+.jeu:hover .game-details {
+    transition: 0.3s;
+    margin-top: 30%; /* Les détails se déplacent un peu plus bas quand l'image est agrandie */
 }
 
 
@@ -199,14 +207,17 @@ textarea {
     margin-bottom: 10px; 
 }
 
+
+
 .backgroundmain {
     width: 80%;
     border: solid black 15px;
     border-radius: 20px;
     background-color: rgba(187, 187, 187, 0.688);
     display: flex;
-    flex-wrap: wrap; /* Permet d'enrouler les éléments si nécessaire */
-    justify-content: space-around; /* Espace uniforme entre les éléments */
+    flex-wrap: wrap; /* Permet d'enrouler les éléments à la ligne suivante si nécessaire */
+    justify-content: flex-start; /* Aligne les jeux à gauche */
+    align-items: flex-start; /* Aligne les jeux en haut */
     padding: 20px; /* Ajoute un espace intérieur */
     gap: 20px; /* Espacement entre les jeux */
 }
@@ -236,17 +247,21 @@ textarea {
 
 
 .game-details {
-    margin-top: 10px;
-    text-align: center;
+    text-align: center; /* Aligne le texte au centre */
+    margin-top: 10px; /* Ajuste l'espacement par rapport aux détails */
 }
 
-
 .jeu {
-    display: flex; /* Aligne contenu interne en flex (utile pour centrer image et texte) */
-    flex-direction: column; /* Image au-dessus, texte en dessous */
-    align-items: center; /* Centre horizontalement l'image et le texte */
-    width: 200px; /* Taille fixe pour les jeux */
-    margin: 0; /* Supprime les marges inutiles */
+    display: flex; /* Aligne le contenu en flex */
+    flex-direction: column; /* Place l'image au-dessus des détails */
+    align-items: center; /* Centre horizontalement */
+    width: 12%; /* Taille fixe pour chaque jeu */
+    margin: 10px; /* Espace extérieur entre les jeux */
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optionnel : Ajoute une ombre */
+    border-radius: 10px; /* Coins arrondis pour tout le conteneur */
+    background-color: #fff; /* Fond blanc pour chaque carte jeu */
 }
 
 .gamebutton{

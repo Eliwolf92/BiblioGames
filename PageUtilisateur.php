@@ -83,18 +83,6 @@ $connexion->close();
         .tri {
             margin-bottom: 10px;
         }
-        .jeu {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .jeu img {
-            max-width: 100px;
-            height: auto;
-        }
-        .game-details {
-            margin-top: 5px;
-        }
         .gamebutton {
             margin-top: 5px;
         }
@@ -109,7 +97,6 @@ $connexion->close();
     <button id="Deconnect" onclick="window.location.href = 'déconnexion.php'">Déconnexion</button>
 </div>
 <div class="backgroundmain">
-    <div class="Liste">
         <h2>Bienvenue <?php echo htmlspecialchars($username); ?> !</h2>
         
         <!-- Boutons de tri -->
@@ -129,7 +116,6 @@ $connexion->close();
                 if (file_exists($imagePath)) {
                     echo '
                     <div class="jeu">
-                        <div class="game-container" data-idgame="' . $idgame[$i] . '">
                             <a href="Game.php?idgame=' . $idgame[$i] . '&id_utilisateur=' . $iduser . '">
                                 <img class="img_game" src="' . $imagePath . '" alt="' . $games[$i] . '">
                             </a>
@@ -138,7 +124,6 @@ $connexion->close();
                                 <div>Nombre total de téléchargements : ' . $total_downloads[$i] . '</div>
                                 <button class="gamebutton" onclick="window.location.href = \'ajout_biblio.php?id_utilisateur=' . $iduser . '&idgame=' . $idgame[$i] . '\'" type="button" name="ajoutbiblio" value="AddBiblio">Ajouter à la bibliothèque</button>
                             </div>
-                        </div>
                     </div>';
                 }
                 
@@ -165,7 +150,6 @@ $connexion->close();
         }
         ?>
     </div>
-</div>
 
 <div style="height: 1250px;width: 250px;border: solid black 10px; position: absolute;background-color: rgb(201, 201, 201); top: 100px;left: 1520px;">
     <div>
